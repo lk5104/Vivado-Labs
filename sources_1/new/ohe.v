@@ -27,13 +27,13 @@ module ohe(
     output wire out
     );
 
-       parameter STATE_0 = 8'd0;
-       parameter STATE_1 = 8'd1;
-       parameter STATE_2 = 8'd2;
-       parameter STATE_3 = 8'd3;
-       parameter STATE_4 = 8'd4;
-       parameter STATE_5 = 8'd5;
-       parameter STATE_6 = 8'd5;
+       localparam STATE_0 = 8'd0;
+       localparam STATE_1 = 8'd1;
+       localparam STATE_2 = 8'd2;
+       localparam STATE_3 = 8'd3;
+       localparam STATE_4 = 8'd4;
+       localparam STATE_5 = 8'd5;
+       localparam STATE_6 = 8'd6;
     
        reg [7:0] current_state;
     
