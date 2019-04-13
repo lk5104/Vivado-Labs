@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/13/2019 02:57:16 PM
+// Create Date: 04/13/2019 03:38:36 PM
 // Design Name: 
-// Module Name: test_clkdivider
+// Module Name: clkdiv_to_hw
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,21 +20,15 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module test_clkdivider();
-    reg clk;
-    wire div_clk;
+module clkdiv_to_hw(
+    input wire clk,
+    output wire div_clk,
+    output wire [1:0] debug
+    );
     
-    clkdiv_to_hw uut(.clk(clk), .div_clk(div_clk));
+    assign debug = {clk, div_clk};
     
-    initial begin
+    clkdivider uut(.clk(clk), .div_clk(div_clk));
     
-        clk = 0;
-        forever clk = #1 ~clk;
     
-    end
-    
-    initial begin
-        #100
-        $finish;
-    end
 endmodule
