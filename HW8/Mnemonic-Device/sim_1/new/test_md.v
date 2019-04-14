@@ -49,6 +49,8 @@ module test_md();
         #8
         change_but = 1;
         #4
+        switch = 0;
+        #40
         
         $finish;
     
