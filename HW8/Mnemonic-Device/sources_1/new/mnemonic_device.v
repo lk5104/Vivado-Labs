@@ -22,6 +22,7 @@
 
 module mnemonic_device(
     input wire clk,
+    input wire reset,
     input wire switch,
     input wire change_but,
     output wire sequence
@@ -35,17 +36,15 @@ module mnemonic_device(
     reg send_sequence;
     reg sequence_holder;
     
-    reg reset = 1;
     integer i;
     
     always @(posedge clk) begin
         if (reset == 1) begin
-            reset <= 0;
             previous_state <= 0;
             count_clks <= 0;
             count_regs <= 0;
             sequence_count <= 0;
-            sequence_holder <= 1;
+            sequence_holder <= 0;
             for(i = 0; i < 32; i = i + 1) begin
                 sequence_reg[i] <= 32'd0;
             end
@@ -62,8 +61,11 @@ module mnemonic_device(
                     count_clks <= count_clks + 1;
                 end
              end else begin // Recording not happening or done
-                if (sequence_count != count_regs) begin
-                    if (sequence_reg[sequence_count] != 0) begin
+                if (sequence_count < count_regs) begin
+                    if (sequence_reg[sequence_count] > 0 && sequence_count == 0) begin
+                        sequence_reg[sequence_count] <= sequence_reg[sequence_count] - 1;
+                    end
+                    else if (sequence_reg[sequence_count] > 1 && sequence_count > 0) begin
                         sequence_reg[sequence_count] <= sequence_reg[sequence_count] - 1;
                     end
                     else begin

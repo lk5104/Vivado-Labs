@@ -3,9 +3,9 @@
 // Company: 
 // Engineer: 
 // 
-// Create Date: 04/13/2019 06:23:26 PM
+// Create Date: 04/14/2019 04:32:06 PM
 // Design Name: 
-// Module Name: test_md
+// Module Name: md_to_hw
 // Project Name: 
 // Target Devices: 
 // Tool Versions: 
@@ -20,42 +20,20 @@
 //////////////////////////////////////////////////////////////////////////////////
 
 
-module test_md();
-    reg clk, reset;
-    reg switch;
-    reg change_but;
-    wire sequence;
+module md_to_hw(
+    input wire clk,
+    input wire reset,
+    input wire switch,
+    input wire change_but,
+    output wire sequence,
+    output wire [4:0]debug
+    );
+    
+    assign debug = {clk, reset, switch, change_but, sequence};
     
     mnemonic_device uut(.clk(clk),
                         .reset(reset),
                         .switch(switch),
                         .change_but(change_but),
                         .sequence(sequence));
-    
-    initial begin
-        clk = 0;
-        forever clk = #1 ~clk;
-    end
-    
-    initial begin
-    
-        switch = 0;
-        change_but = 0;
-        reset = 1;
-        #2
-        reset = 0;
-        switch = 1;
-        #10
-        change_but = 1;
-        #6
-        change_but = 0;
-        #8
-        change_but = 1;
-        #4
-        switch = 0;
-        #40
-        
-        $finish;
-    
-    end
 endmodule
